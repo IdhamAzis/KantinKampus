@@ -17,28 +17,61 @@ class MenuPage extends StatefulWidget {
 class _MenuPageState extends State<MenuPage> {
   bool isExpanded = false;
 
+  /// WAJIB string default (anti crash Flutter Web)
+  String searchQuery = '';
+
   final List<Map<String, dynamic>> menuList = [
     {
-      'name': 'Nasi Goreng',
+      'name': 'Nasi Goreng Spesial',
+      'desc': 'Nasi goreng dengan telur dan ayam',
       'price': 15000,
       'image': 'assets/image/nasi_goreng.jpg',
     },
     {
-      'name': 'Mie Ayam',
+      'name': 'Mie Ayam Bakso',
+      'desc': 'Mie ayam dengan bakso sapi',
       'price': 12000,
       'image': 'assets/image/mie_ayam.jpg',
     },
     {
-      'name': 'Es Teh',
+      'name': 'Ayam Geprek',
+      'desc': 'Ayam crispy sambal pedas',
+      'price': 18000,
+      'image': 'assets/image/nasi_goreng.jpg',
+    },
+    {
+      'name': 'Es Teh Manis',
+      'desc': 'Teh segar dingin',
       'price': 5000,
       'image': 'assets/image/es_teh.jpg',
     },
     {
-      'name': 'Es Jeruk',
+      'name': 'Es Jeruk Peras',
+      'desc': 'Jeruk segar asli',
       'price': 7000,
       'image': 'assets/image/es_jeruk.jpg',
     },
+    {
+      'name': 'Jus Alpukat',
+      'desc': 'Alpukat creamy dengan coklat',
+      'price': 12000,
+      'image': 'assets/image/es_jeruk.jpg',
+    },
   ];
+
+  // ================= FILTER MENU (ANTI ERROR) =================
+  List<Map<String, dynamic>> get filteredMenu {
+    final query = searchQuery.trim().toLowerCase();
+
+    if (query.isEmpty) return menuList;
+
+    return menuList.where((menu) {
+      final name = (menu['name'] ?? '').toString().toLowerCase();
+      final desc = (menu['desc'] ?? '').toString().toLowerCase();
+
+      return name.contains(query) || desc.contains(query);
+    }).toList();
+  }
 
   // ================= CART LOGIC =================
   void addToCart(Map<String, dynamic> item) {
@@ -96,7 +129,7 @@ class _MenuPageState extends State<MenuPage> {
       ),
       body: Stack(
         children: [
-          // ================= MENU GRID =================
+          // ================= CONTENT =================
           Padding(
             padding: EdgeInsets.fromLTRB(
               16,
@@ -104,23 +137,64 @@ class _MenuPageState extends State<MenuPage> {
               16,
               cart.isEmpty ? 16 : (isExpanded ? 360 : 170),
             ),
-            child: GridView.builder(
-              itemCount: menuList.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 14,
-                crossAxisSpacing: 14,
-                childAspectRatio: 0.75,
-              ),
-              itemBuilder: (context, index) {
-                final item = menuList[index];
-                return _MenuCard(
-                  name: item['name'],
-                  price: item['price'],
-                  image: item['image'],
-                  onAdd: () => addToCart(item),
-                );
-              },
+            child: Column(
+              children: [
+                // ================= SEARCH =================
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 14),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(14),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.08),
+                        blurRadius: 8,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        searchQuery = value;
+                      });
+                    },
+                    decoration: const InputDecoration(
+                      icon: Icon(Icons.search),
+                      hintText: 'Cari menu (mie, ayam, es)',
+                      border: InputBorder.none,
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 12),
+
+                // ================= MENU LIST =================
+                Expanded(
+                  child: filteredMenu.isEmpty
+                      ? const Center(
+                          child: Text(
+                            'Menu tidak ditemukan',
+                            style: TextStyle(color: Colors.black54),
+                          ),
+                        )
+                      : ListView.separated(
+                          itemCount: filteredMenu.length,
+                          separatorBuilder: (_, __) =>
+                              const SizedBox(height: 12),
+                          itemBuilder: (context, index) {
+                            final item = filteredMenu[index];
+                            return _MenuCard(
+                              name: item['name'],
+                              desc: item['desc'],
+                              price: item['price'],
+                              image: item['image'],
+                              onAdd: () => addToCart(item),
+                            );
+                          },
+                        ),
+                ),
+              ],
             ),
           ),
 
@@ -128,7 +202,6 @@ class _MenuPageState extends State<MenuPage> {
           if (cart.isNotEmpty)
             AnimatedPositioned(
               duration: const Duration(milliseconds: 250),
-              curve: Curves.easeOut,
               bottom: 0,
               left: 0,
               right: 0,
@@ -168,48 +241,41 @@ class _MenuPageState extends State<MenuPage> {
                             isExpanded
                                 ? 'Sembunyikan Pesanan'
                                 : 'Lihat Pesanan',
-                            style:
-                                const TextStyle(fontWeight: FontWeight.w600),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w600),
                           ),
                         ],
                       ),
                     ),
 
-                    if (isExpanded) ...[
-                      const SizedBox(height: 12),
+                    if (isExpanded)
                       SizedBox(
-                        height: 360,
+                        height: 240,
                         child: ListView.builder(
                           itemCount: cart.length,
-                          itemBuilder: (context, index) {
-                            final item = cart[index];
+                          itemBuilder: (_, i) {
+                            final item = cart[i];
                             return Row(
                               children: [
                                 Expanded(
                                   child: Text(
-                                    item['name'],
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.w600),
-                                  ),
+                                      '${item['name']} x${item['qty']}'),
                                 ),
                                 IconButton(
                                   icon: const Icon(Icons.remove),
-                                  onPressed: () => decreaseQty(index),
+                                  onPressed: () => decreaseQty(i),
                                 ),
-                                Text('${item['qty']}'),
                                 IconButton(
                                   icon: const Icon(Icons.add),
-                                  onPressed: () => increaseQty(index),
+                                  onPressed: () => increaseQty(i),
                                 ),
                               ],
                             );
                           },
                         ),
                       ),
-                    ],
 
-                    const SizedBox(height: 10),
-
+                    const SizedBox(height: 8),
                     SizedBox(
                       width: double.infinity,
                       height: 46,
@@ -249,12 +315,14 @@ class _MenuPageState extends State<MenuPage> {
 // ================= MENU CARD =================
 class _MenuCard extends StatelessWidget {
   final String name;
+  final String desc;
   final int price;
   final String image;
   final VoidCallback onAdd;
 
   const _MenuCard({
     required this.name,
+    required this.desc,
     required this.price,
     required this.image,
     required this.onAdd,
@@ -263,80 +331,78 @@ class _MenuCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.15),
-            blurRadius: 10,
-            offset: const Offset(0, 6),
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: Stack(
-          children: [
-            // ===== IMAGE =====
-            Positioned.fill(
-              child: Image.asset(
-                image,
-                fit: BoxFit.cover,
-              ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 15),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  desc,
+                  style: const TextStyle(
+                      color: Colors.black54, fontSize: 12),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Rp $price',
+                  style: const TextStyle(fontWeight: FontWeight.w600),
+                ),
+              ],
             ),
-
-            // ===== DARK OVERLAY =====
-            Positioned.fill(
-              child: Container(
-                color: Colors.black.withOpacity(0.45),
+          ),
+          const SizedBox(width: 12),
+          Column(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.asset(
+                  image,
+                  width: 70,
+                  height: 70,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-
-            // ===== CONTENT =====
-            Padding(
-              padding: const EdgeInsets.all(12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    name,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
+              const SizedBox(height: 6),
+              SizedBox(
+                width: 70,
+                height: 28,
+                child: OutlinedButton(
+                  onPressed: onAdd,
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: const Color(0xff188E69),
+                    side:
+                        const BorderSide(color: Color(0xff188E69)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  const SizedBox(height: 4),
-                  Text(
-                    'Rp $price',
-                    style: const TextStyle(
-                      color: Colors.white70,
-                      fontSize: 13,
-                    ),
+                  child: const Text(
+                    'Add',
+                    style: TextStyle(fontSize: 12),
                   ),
-                  const Spacer(),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 36,
-                    child: ElevatedButton(
-                      onPressed: onAdd,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xff188E69),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      child: const Text(
-                        'Tambah',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
+        ],
       ),
     );
   }

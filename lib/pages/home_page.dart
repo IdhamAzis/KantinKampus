@@ -7,187 +7,175 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-
-      // ================= APPBAR =================
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
         backgroundColor: const Color(0xff188E69),
-        scrolledUnderElevation: 0,
         elevation: 0,
         centerTitle: true,
         title: const Text(
           'Kantin Kampus UNIBI',
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 18,
-          ),
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
-
-      // ================= BODY (FOOTER FIX) =================
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          return SingleChildScrollView(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: constraints.maxHeight,
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            // ================= HERO CARD =================
+            Container(
+              height: 220,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(24),
+                image: const DecorationImage(
+                  image: AssetImage('assets/image/kantin1.jpg'),
+                  fit: BoxFit.cover,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.3),
+                    blurRadius: 20,
+                    offset: const Offset(0, 10),
+                  ),
+                ],
               ),
-              child: IntrinsicHeight(
-                child: Column(
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(24),
+                  gradient: LinearGradient(
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                    colors: [
+                      Colors.black.withOpacity(0.7),
+                      Colors.transparent,
+                    ],
+                  ),
+                ),
+                child: const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        children: [
-                          // ===== SELAMAT DATANG CARD =====
-                          Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                              color: const Color(0xff22B586),
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.15),
-                                  blurRadius: 16,
-                                  offset: const Offset(0, 8),
-                                ),
-                              ],
-                            ),
-                            child: const Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Selamat Datang 👋',
-                                  style: TextStyle(
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                SizedBox(height: 10),
-                                Text(
-                                  'Kantin Kampus UNIBI menyediakan berbagai pilihan makanan dan minuman favorit mahasiswa dengan harga terjangkau.',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    height: 1.4,
-                                    color: Colors.black87,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          const SizedBox(height: 20),
-
-                          // ===== PILIH KANTIN CARD =====
-                          Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
-                            decoration: BoxDecoration(
-                              color: const Color(0xff22B586),
-                              borderRadius: BorderRadius.circular(24),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.18),
-                                  blurRadius: 20,
-                                  offset: const Offset(0, 10),
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              children: [
-                                const Text(
-                                  'Pilih Kantin',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(height: 6),
-                                const Text(
-                                  'Silakan pilih kantin untuk melihat menu',
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.black54,
-                                  ),
-                                ),
-                                const SizedBox(height: 20),
-
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    KantinCard(
-                                      title: 'Kantin Kampus 1',
-                                      image: 'assets/image/kantin1.jpg',
-                                      address:
-                                          'Gedung A – Lantai 1, Kampus UNIBI',
-                                    ),
-                                    SizedBox(width: 16),
-                                    KantinCard(
-                                      title: 'Kantin Kampus 2',
-                                      image: 'assets/image/kantin1.jpg',
-                                      address:
-                                          'Gedung B – Area Parkir, Kampus UNIBI',
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                    Text(
+                      'BELANJA CEPAT & PRAKTIS',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
-
-                    const Spacer(), // 🔥 KUNCI FOOTER NEMPEL BAWAH
+                    SizedBox(height: 6),
+                    Text(
+                      'KANTIN KAMPUS UNIBI',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 6),
+                    Text(
+                      'Nikmati kemudahan memesan makanan dan minuman favorit mahasiswa langsung dari aplikasi.',
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: 13,
+                        height: 1.4,
+                      ),
+                    ),
                   ],
                 ),
               ),
             ),
-          );
-        },
-      ),
 
-      // ================= FOOTER =================
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        decoration: BoxDecoration(
-          color: const Color(0xff636B76),
-          borderRadius: const BorderRadius.vertical(
-            top: Radius.circular(24),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.25),
-              blurRadius: 20,
-              offset: const Offset(0, -6),
+            const SizedBox(height: 24),
+
+            // ================= PILIH KANTIN =================
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Pilih Kantin',
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+            ),
+
+            const SizedBox(height: 14),
+
+            Row(
+              children: const [
+                Expanded(
+                  child: KantinCard(
+                    title: 'Kantin Kampus 1',
+                    image: 'assets/image/kantin1.jpg',
+                    address: 'Gedung A – Lantai 1',
+                  ),
+                ),
+                SizedBox(width: 14),
+                Expanded(
+                  child: KantinCard(
+                    title: 'Kantin Kampus 2',
+                    image: 'assets/image/kantin2.jpg',
+                    address: 'Gedung B – Area Parkir',
+                  ),
+                ),
+              ],
             ),
           ],
         ),
-        child: const Column(
-          mainAxisSize: MainAxisSize.min,
+      ),
+    );
+  }
+}
+
+// ================= MENU ICON WIDGET =================
+class _MenuIcon extends StatelessWidget {
+  final IconData icon;
+  final String label;
+
+  const _MenuIcon({
+    required this.icon,
+    required this.label,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(18),
+        onTap: () {},
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              'Kantin Kampus UNIBI',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 14,
-                color: Colors.white,
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: const Color(0xffE6F4EF),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                icon,
+                size: 26,
+                color: const Color(0xff188E69),
               ),
             ),
-            SizedBox(height: 6),
+            const SizedBox(height: 10),
             Text(
-              'Mudah • Cepat • Terjangkau',
-              style: TextStyle(
+              label,
+              style: const TextStyle(
                 fontSize: 12,
-                color: Colors.white70,
-              ),
-            ),
-            SizedBox(height: 6),
-            Text(
-              '© 2025 UNIBI',
-              style: TextStyle(
-                fontSize: 11,
-                color: Colors.white54,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ],
