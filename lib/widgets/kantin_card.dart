@@ -25,7 +25,7 @@ class KantinCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) => MenuPage(kantin: title),
+            builder: (_) => MenuPage(),
           ),
         );
       },
@@ -42,6 +42,7 @@ class KantinCard extends StatelessWidget {
           ],
         ),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // ===== IMAGE =====
