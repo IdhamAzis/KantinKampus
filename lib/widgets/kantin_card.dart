@@ -17,88 +17,88 @@ class KantinCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return InkWell(
+    return Material(
+      color: Colors.transparent, // ⬅️ WAJIB untuk InkWell
       borderRadius: BorderRadius.circular(20),
-      splashColor: theme.colorScheme.primary.withOpacity(0.12),
-      highlightColor: Colors.transparent,
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => MenuPage(),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(20),
+        splashColor: theme.colorScheme.primary.withOpacity(0.12),
+        highlightColor: Colors.transparent,
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => MenuPage(),
+            ),
+          );
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: theme.cardColor,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.12),
+                blurRadius: 12,
+                offset: const Offset(0, 6),
+              ),
+            ],
           ),
-        );
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color: theme.cardColor, // ✅ PUTIH / SESUAI THEME
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: theme.shadowColor.withOpacity(0.15),
-              blurRadius: 12,
-              offset: const Offset(0, 6),
-            ),
-          ],
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // ===== IMAGE =====
-            ClipRRect(
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(20),
+                ),
+                child: Image.network(
+                  image,
+                  height: 120,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
               ),
-              child: Image.asset(
-                image,
-                height: 120,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
-            ),
-
-            // ===== CONTENT =====
-            Padding(
-              padding: const EdgeInsets.fromLTRB(12, 10, 12, 14),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: theme.textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.location_on,
-                        size: 12,
-                        color: theme.textTheme.bodySmall?.color,
+              Padding(
+                padding: const EdgeInsets.fromLTRB(12, 10, 12, 14),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: theme.textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
                       ),
-                      const SizedBox(width: 4),
-                      Expanded(
-                        child: Text(
-                          address,
-                          style: theme.textTheme.bodySmall,
+                    ),
+                    const SizedBox(height: 4),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.location_on,
+                          size: 12,
+                          color: theme.textTheme.bodySmall?.color,
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Lihat Menu',
-                    style: theme.textTheme.labelMedium?.copyWith(
-                      color: theme.colorScheme.primary,
-                      fontWeight: FontWeight.w600,
+                        const SizedBox(width: 4),
+                        Expanded(
+                          child: Text(
+                            address,
+                            style: theme.textTheme.bodySmall,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 8),
+                    Text(
+                      'Lihat Menu',
+                      style: theme.textTheme.labelMedium?.copyWith(
+                        color: theme.colorScheme.primary,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

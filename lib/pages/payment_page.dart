@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 
 class PaymentPage extends StatelessWidget {
-  final int total;
+  final int totalPayment;
+  final String paymentMethod;
 
-  const PaymentPage({super.key, required this.total});
+  const PaymentPage({
+    super.key,
+    required this.totalPayment,
+    required this.paymentMethod,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -11,29 +16,41 @@ class PaymentPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Pembayaran'),
         backgroundColor: const Color(0xff188E69),
+        centerTitle: true,
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(16),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Total Pembayaran'),
-            const SizedBox(height: 10),
             Text(
-              'Rp $total',
+              'Metode Pembayaran',
               style: const TextStyle(
-                fontSize: 28,
                 fontWeight: FontWeight.bold,
+                fontSize: 16,
               ),
             ),
-            const SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Pembayaran berhasil')),
-                );
-              },
-              child: const Text('Bayar'),
-            )
+            const SizedBox(height: 8),
+            Text(paymentMethod.toUpperCase()),
+
+            const SizedBox(height: 24),
+
+            Text(
+              'Total yang Harus Dibayar',
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Rp $totalPayment',
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Color(0xff188E69),
+              ),
+            ),
           ],
         ),
       ),

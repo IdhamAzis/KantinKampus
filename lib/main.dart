@@ -18,6 +18,22 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Kantin Kampus',
+
+      // ✅ THEME GLOBAL
+      theme: ThemeData(
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xff188E69),
+          titleTextStyle: TextStyle(
+            color: Colors.white,      
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+          iconTheme: IconThemeData(
+            color: Colors.white,      
+          ),
+        ),
+      ),
+
       home: const HomePage(),
     );
   }

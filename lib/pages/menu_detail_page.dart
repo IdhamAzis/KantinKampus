@@ -22,7 +22,7 @@ class MenuDetailPage extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(
+          Image.network(
             image,
             width: double.infinity,
             height: 220,
@@ -43,7 +43,10 @@ class MenuDetailPage extends StatelessWidget {
                 const SizedBox(height: 8),
                 Text(
                   'Rp $price',
-                  style: const TextStyle(fontSize: 16),
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                    ),
                 ),
               ],
             ),

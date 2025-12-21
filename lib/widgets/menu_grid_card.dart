@@ -14,60 +14,73 @@ class MenuGridCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 2,
+      elevation: 3,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
+      clipBehavior: Clip.antiAlias, // ⬅️ PENTING
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // IMAGE
-          ClipRRect(
-            borderRadius:
-                const BorderRadius.vertical(top: Radius.circular(16)),
+          // ================= IMAGE =================
+          AspectRatio(
+            aspectRatio: 1,
             child: Image.network(
               item.image,
-              height: 120,
-              width: double.infinity,
               fit: BoxFit.cover,
+              errorBuilder: (_, __, ___) => const Icon(
+                Icons.fastfood,
+                size: 40,
+                color: Colors.grey,
+              ),
             ),
           ),
 
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  item.name,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  'Rp ${item.price.toInt()}',
-                  style: const TextStyle(
-                    color: Colors.green,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 8),
-
-                SizedBox(
-                  width: double.infinity,
-                  height: 32,
-                  child: OutlinedButton(
-                    onPressed: onAdd,
-                    child: const Text(
-                      'Tambah',
-                      style: TextStyle(fontSize: 12),
+          // ================= CONTENT =================
+          Expanded( // ⬅️ INI KUNCI OVERFLOW FIX
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // ===== NAMA MENU =====
+                  Text(
+                    item.name,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 13,
                     ),
                   ),
-                ),
-              ],
+
+                  // ===== HARGA =====
+                  Text(
+                    'Rp ${item.price}',
+                    style: const TextStyle(
+                      color: Colors.green,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                    ),
+                  ),
+
+                  // ===== BUTTON =====
+                  SizedBox(
+                    width: double.infinity,
+                    height: 32, // ⬅️ JANGAN TERLALU TINGGI
+                    child: OutlinedButton(
+                      onPressed: onAdd,
+                      style: OutlinedButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                      ),
+                      child: const Text(
+                        'Tambah',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

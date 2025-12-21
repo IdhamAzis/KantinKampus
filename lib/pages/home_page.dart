@@ -14,14 +14,18 @@ class HomePage extends StatelessWidget {
         centerTitle: true,
         title: const Text(
           'Kantin Kampus UNIBI',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white, // title putih
+          ),
         ),
       ),
+
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            // ================= HERO CARD =================
+            // ================= HERO =================
             Container(
               height: 220,
               width: double.infinity,
@@ -94,9 +98,10 @@ class HomePage extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Text(
                 'Pilih Kantin',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(fontWeight: FontWeight.bold),
               ),
             ),
 
@@ -121,63 +126,55 @@ class HomePage extends StatelessWidget {
                 ),
               ],
             ),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
-// ================= MENU ICON WIDGET =================
-class _MenuIcon extends StatelessWidget {
-  final IconData icon;
-  final String label;
+            // ================= JARAK KE BAWAH =================
+            const SizedBox(height: 90),
 
-  const _MenuIcon({
-    required this.icon,
-    required this.label,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(18),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.08),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(18),
-        onTap: () {},
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+            // ================= FOOTER =================
             Container(
-              padding: const EdgeInsets.all(12),
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 20),
               decoration: BoxDecoration(
-                color: const Color(0xffE6F4EF),
-                shape: BoxShape.circle,
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(18),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
               ),
-              child: Icon(
-                icon,
-                size: 26,
-                color: const Color(0xff188E69),
+              child: const Column(
+                children: [
+                  Text(
+                    'Kantin Kampus UNIBI',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                  ),
+                  SizedBox(height: 6),
+                  Text(
+                    'Belanja makanan di kampus UNIBI, menjadi lebih mudah',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    '© 2025 • Universitas Informatika & Bisnis Indonesia',
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 10),
-            Text(
-              label,
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
+
+            const SizedBox(height: 20),
           ],
         ),
       ),

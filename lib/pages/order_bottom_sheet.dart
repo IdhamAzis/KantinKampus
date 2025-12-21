@@ -110,34 +110,34 @@ class _OrderBottomSheetState
               padding: const EdgeInsets.all(14),
               child: SizedBox(
                 width: double.infinity,
-                height: 46,
+                height: 35,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        const Color(0xff188E69),
+                    backgroundColor: const Color(0xff188E69),
                     shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(14),
+                      borderRadius: BorderRadius.circular(14),
                     ),
                   ),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => const OrderReviewPage(),
-                      ),
-                    );
-                  },
-                  child: Text(
-                    'Lanjutkan • Rp $total',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const OrderReviewPage(),
               ),
-            ),
+            );
+          },
+      child: const Text(
+        'Lanjutkan',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    ),
+  ),
+),
+
           ],
         ),
       ),
