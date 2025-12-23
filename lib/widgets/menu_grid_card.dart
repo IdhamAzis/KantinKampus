@@ -18,12 +18,12 @@ class MenuGridCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
-      clipBehavior: Clip.antiAlias, // ⬅️ PENTING
+      clipBehavior: Clip.antiAlias,
       child: Column(
         children: [
           // ================= IMAGE =================
           AspectRatio(
-            aspectRatio: 1,
+            aspectRatio: 1.1,
             child: Image.network(
               item.image,
               fit: BoxFit.cover,
@@ -36,7 +36,7 @@ class MenuGridCard extends StatelessWidget {
           ),
 
           // ================= CONTENT =================
-          Expanded( // ⬅️ INI KUNCI OVERFLOW FIX
+          Expanded(
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: Column(
@@ -58,24 +58,33 @@ class MenuGridCard extends StatelessWidget {
                   Text(
                     'Rp ${item.price}',
                     style: const TextStyle(
-                      color: Colors.green,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 13,
                     ),
                   ),
 
-                  // ===== BUTTON =====
+                  // ===== BUTTON HIJAU =====
                   SizedBox(
                     width: double.infinity,
-                    height: 32, // ⬅️ JANGAN TERLALU TINGGI
-                    child: OutlinedButton(
+                    height: 32,
+                    child: ElevatedButton(
                       onPressed: onAdd,
-                      style: OutlinedButton.styleFrom(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xff188E69),
                         padding: EdgeInsets.zero,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        elevation: 0,
                       ),
                       child: const Text(
                         'Tambah',
-                        style: TextStyle(fontSize: 12),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                        ),
                       ),
                     ),
                   ),

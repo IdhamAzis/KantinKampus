@@ -15,7 +15,7 @@ class MenuModel {
   return MenuModel(
     name: json['strMeal'],
     image: json['strMealThumb'],
-    price: (id.hashCode % 5 + 1) * 5000, // 5k – 25k
+    price: (id.hashCode % 5 + 1) * 5000,
   );
 }
 
